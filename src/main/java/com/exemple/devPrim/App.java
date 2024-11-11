@@ -2,9 +2,11 @@ package com.exemple.devPrim;
 import java.util.Locale;
 import java.util.Scanner;
 import entities.Employee;
+import services.PensionService;
 import services.SalaryService;
-/*import services.TaxService;
-import services.PensionService;*/
+import services.TaxService;
+import services.PensionService;
+import services.BrasilTaxService;
 
 public class App  {
     public static void main( String[] args ) {
@@ -21,8 +23,11 @@ public class App  {
     System.out.printf("Salário bruto: ");
     double grossSalary = sc.nextDouble();
     
+    PensionService pensionService = new PensionService();
+    TaxService taxService = new BrasilTaxService();
+    SalaryService  salaryService = new SalaryService(taxService, pensionService);
+    
     Employee employee = new Employee(name, grossSalary);
-    SalaryService  salaryService = new SalaryService();
     double netSalary= salaryService.netSalary(employee);
     System.out.printf("Salário liquido: %.2f%n", netSalary);
 
